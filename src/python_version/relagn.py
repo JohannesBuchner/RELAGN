@@ -1845,8 +1845,11 @@ class relqso(relagn):
         self.Egrid = self.Ebins[:-1] + 0.5 * self.dEs
         self.nu_grid = (self.Egrid * u.keV).to(u.Hz,
                                 equivalencies=u.spectral()).value
+        self.wave_grid = (self.Egrid * u.keV).to(u.AA,
+                                equivalencies=u.spectral()).value
         self.nu_obs = self.nu_grid/(1 + self.z) #Observers frame
         self.E_obs = self.Egrid/(1 + self.z)
+        self.wave_obs = self.wave_grid * (1+self.z)
         
         #Creating radal grid over disc and warm compton regions
         self.logr_ad_bins = self._make_rbins(np.log10(self.r_w), np.log10(self.r_out))
@@ -1905,10 +1908,3 @@ class relqso(relagn):
         """
         self.hotCorona_lumin()
         self.gamma_h = (7/3) * (self.Ldiss/self.Lseed)**(-0.1)
-        
-        
-    
-
-
-
-
